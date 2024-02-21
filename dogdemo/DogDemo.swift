@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct DogDemo: App {
+    @StateObject var vm = HomeViewModel()
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(vm)
         }
     }
 }

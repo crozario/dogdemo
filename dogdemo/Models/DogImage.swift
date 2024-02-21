@@ -12,7 +12,7 @@ struct DogImage {
     let url: URL
 }
 
-struct DogImages: Codable {
+struct DogImages: Decodable {
     let imageURLs: [String]
     
     enum CodingKeys: String, CodingKey {
