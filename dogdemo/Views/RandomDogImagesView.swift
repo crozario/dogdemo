@@ -12,44 +12,9 @@ struct RandomDogImagesView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(vm.dogImages, id: \.id)  { dogImage in
-                    HStack {
-                        Spacer()
-                        AsyncImage(url: dogImage.url) { phase in
-                            switch phase {
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 200, height: 200)
-                                    .border(Color.blue, width: 2)
-                            case .failure:
-                                ZStack {
-                                    Color.pink
-                                    Text("Loading Failed!")
-                                        .foregroundStyle(.white)
-                                }
-                                .frame(width: 200, height: 200)
-                            case .empty:
-                                ZStack {
-                                    ProgressView()
-                                        .foregroundStyle(.white)
-                                }
-                                .frame(width: 200, height: 200)
-                            @unknown default:
-                                ZStack {
-                                    Color.pink
-                                    Text("Unknown Failure")
-                                }
-                                .frame(width: 200, height: 200)
-                            }
-                        }
-                        Spacer()
-                    }
-                }
-            }
+            DogImageShowcaseView(dogImages: vm.dogImages)
             .navigationTitle("Random Dogs")
         }
     }
 }
+

@@ -15,7 +15,7 @@ struct DogBreedsListView: View {
             List {
                 ForEach(vm.dogBreeds, id: \.breed) { dogBreed in
                     NavigationLink {
-                        DogBreedView(dogBreed: dogBreed)
+                        DogBreedImagesView(dogBreed: dogBreed)
                     } label: {
                         Text(dogBreed.breed)
                             .font(.headline)
@@ -27,6 +27,6 @@ struct DogBreedsListView: View {
     }
 }
 
-#Preview {
-    DogBreedsListView()
-}
+//#Preview {
+//    DogBreedsListView()
+//}

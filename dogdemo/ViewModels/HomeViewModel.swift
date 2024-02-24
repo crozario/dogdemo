@@ -13,7 +13,7 @@ class HomeViewModel: ObservableObject {
     
     init() {
         self.fetchDogBreeds()
-        self.fetchRandomDogImage(count: 10)
+        self.fetchRandomDogImage(count: 50)
     }
     
     func fetchRandomDogImage(count: Int) {
@@ -67,6 +67,33 @@ class HomeViewModel: ObservableObject {
                 print("error fetching data: \(error)")
             }
             
+        }.resume()
+    }
+
+    
+    func fetchDogBreedImages(breed: String, completion: @escaping ([DogImage]) -> Void) {
+        var dogImages = [DogImage]()
+        
+        guard let url = URL(string: "https://dog.ceo/api/breed/\(breed)/images") else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(DogImages.self, from: data)
+                    
+                    for url in result.imageURLs {
+                        if let url = URL(string: url) {
+                            dogImages.append(DogImage(id: UUID(), url: url))
+                        }
+                    }
+                    completion(dogImages)
+                } catch {
+                    print("Error decoding json \(error)")
+                }
+            }
         }.resume()
     }
 }
