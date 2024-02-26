@@ -27,23 +27,31 @@ struct DogImageShowcaseView: View {
                                 .cornerRadius(10)
                         case .failure:
                             ZStack {
-                                Color.pink
-                                Text("Loading Failed!")
-                                    .foregroundStyle(.white)
+                                Color.gray
+                                Text("Failed To Load")
                             }
-                            .frame(width: 200, height: 200)
+                            .scaledToFill()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .clipped()
+                            .cornerRadius(10)
                         case .empty:
                             ZStack {
                                 ProgressView()
                                     .foregroundStyle(.white)
                             }
-                            .frame(width: 200, height: 200)
+                            .scaledToFill()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .clipped()
+                            .cornerRadius(10)
                         @unknown default:
                             ZStack {
-                                Color.pink
+                                Color.gray
                                 Text("Unknown Failure")
                             }
-                            .frame(width: 200, height: 200)
+                            .scaledToFill()
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                            .clipped()
+                            .cornerRadius(10)
                         }
                     }
                 }

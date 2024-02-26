@@ -17,11 +17,14 @@ struct DogBreedImagesView: View {
         DogImageShowcaseView(dogImages: dogBreedImages)
         .navigationTitle(dogBreed.breed)
         .onAppear {
-            vm.fetchDogBreedImages(breed: dogBreed.breed) { dogImages in
-                for image in dogImages {
+            vm.fetchDogBreedImages(breed: dogBreed.breed) { result in
+                switch result {
+                case .success(let dogImages):
                     DispatchQueue.main.async {
-                        dogBreedImages.append(image)
+                        self.dogBreedImages = dogImages
                     }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
         }

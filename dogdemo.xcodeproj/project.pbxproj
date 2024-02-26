@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C403B73F2B8BFE6C00CD2CA0 /* DogImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403B73E2B8BFE6C00CD2CA0 /* DogImageService.swift */; };
+		C403B7412B8C197000CD2CA0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C403B7402B8C197000CD2CA0 /* ImageCache.swift */; };
 		C4B974552B829DB6000AABE9 /* DogDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B974542B829DB6000AABE9 /* DogDemo.swift */; };
 		C4B974572B829DB6000AABE9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B974562B829DB6000AABE9 /* HomeView.swift */; };
 		C4B974592B829DB9000AABE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4B974582B829DB9000AABE9 /* Assets.xcassets */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C403B73E2B8BFE6C00CD2CA0 /* DogImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageService.swift; sourceTree = "<group>"; };
+		C403B7402B8C197000CD2CA0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		C4B974512B829DB6000AABE9 /* dogdemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dogdemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4B974542B829DB6000AABE9 /* DogDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDemo.swift; sourceTree = "<group>"; };
 		C4B974562B829DB6000AABE9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -50,6 +54,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C403B73D2B8BFE4F00CD2CA0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C403B73E2B8BFE6C00CD2CA0 /* DogImageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		C4B974482B829DB6000AABE9 = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +86,8 @@
 				C4FE65FF2B851109000B405C /* Views */,
 				C4FE66002B851110000B405C /* ViewModels */,
 				C4B974622B82C40E000AABE9 /* Models */,
+				C403B73D2B8BFE4F00CD2CA0 /* Services */,
+				C403B7402B8C197000CD2CA0 /* ImageCache.swift */,
 				C4EA0FED2B883D29009CF157 /* dognames.json */,
 				C4B974582B829DB9000AABE9 /* Assets.xcassets */,
 				C4B9745A2B829DB9000AABE9 /* Preview Content */,
@@ -104,8 +118,8 @@
 				C4B974562B829DB6000AABE9 /* HomeView.swift */,
 				C4FE66042B851190000B405C /* DogBreedsListView.swift */,
 				C4FE66012B851138000B405C /* RandomDogImagesView.swift */,
-				C4C976C42B896A7400D47608 /* DogImageShowcaseView.swift */,
 				C4FE66062B8588C5000B405C /* DogBreedImagesView.swift */,
+				C4C976C42B896A7400D47608 /* DogImageShowcaseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -195,10 +209,12 @@
 				C4B974642B82C434000AABE9 /* DogImage.swift in Sources */,
 				C4FE66052B851190000B405C /* DogBreedsListView.swift in Sources */,
 				C4FE65FE2B84FD1A000B405C /* DogService.swift in Sources */,
+				C403B7412B8C197000CD2CA0 /* ImageCache.swift in Sources */,
 				C4B974552B829DB6000AABE9 /* DogDemo.swift in Sources */,
 				C4B974682B82C61E000AABE9 /* HomeViewModel.swift in Sources */,
 				C4FE65FC2B84FC12000B405C /* DogBreeds.swift in Sources */,
 				C4FE66022B851138000B405C /* RandomDogImagesView.swift in Sources */,
+				C403B73F2B8BFE6C00CD2CA0 /* DogImageService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

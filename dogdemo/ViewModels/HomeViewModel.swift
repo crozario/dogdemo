@@ -11,89 +11,47 @@ class HomeViewModel: ObservableObject {
     @Published var dogImages = [DogImage]()
     @Published var dogBreeds = [DogBreed]()
     
+    let dogImageService = DogImageService()
+    
     init() {
-        self.fetchDogBreeds()
+        self.fetchDogBreedNames()
         self.fetchRandomDogImage(count: 50)
     }
     
+    func fetchDogBreedNames() {
+        dogImageService.fetchDogBreedNames { [weak self] result in
+            switch result {
+            case .success(let dogBreeds):
+                DispatchQueue.main.async {
+                    self?.dogBreeds = dogBreeds
+                }
+            case . failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func fetchRandomDogImage(count: Int) {
-        guard let url = URL(string: "https://dog.ceo/api/breeds/image/random/\(count)") else {
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(DogImages.self, from: data)
-                    
-                    for imageURL in result.imageURLs {
-                        print(imageURL)
-                        if let url = URL(string: imageURL) {
-                            DispatchQueue.main.async {
-                                self.dogImages.append(DogImage(id: UUID(), url: url))
-                            }
-                        }
-                    }
-                } catch {
-                    print("Error decoding json: \(error)")
+        dogImageService.fetchRandomDogImage(count: count) { [weak self] result in
+            switch result {
+            case .success(let dogImages):
+                DispatchQueue.main.async {
+                    self?.dogImages = dogImages
                 }
-            } else if let error = error {
-                print("Error fetching data: \(error)")
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-        }.resume()
+        }
     }
     
-    func fetchDogBreeds() {
-        guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else {
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(DogBreeds.self, from: data)
-                    
-                    for breed in result.breeds {
-                        DispatchQueue.main.async {
-                            self.dogBreeds.append(DogBreed(breed: breed.key, subBreeds: breed.value))
-                        }
-                    }
-                } catch {
-                    print("error decoding json \(error)")
-                }
-            } else if let error = error {
-                print("error fetching data: \(error)")
+    func fetchDogBreedImages(breed: String, completionHandler: @escaping (Result<[DogImage], Error>) -> Void) {
+        dogImageService.fetchDogBreedImages(breed: breed) { result in
+            switch result {
+            case .success(let dogImages):
+                completionHandler(.success(dogImages))
+            case .failure(let error):
+                completionHandler(.failure(error))
             }
-            
-        }.resume()
-    }
-
-    
-    func fetchDogBreedImages(breed: String, completion: @escaping ([DogImage]) -> Void) {
-        var dogImages = [DogImage]()
-        
-        guard let url = URL(string: "https://dog.ceo/api/breed/\(breed)/images") else {
-            return
         }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(DogImages.self, from: data)
-                    
-                    for url in result.imageURLs {
-                        if let url = URL(string: url) {
-                            dogImages.append(DogImage(id: UUID(), url: url))
-                        }
-                    }
-                    completion(dogImages)
-                } catch {
-                    print("Error decoding json \(error)")
-                }
-            }
-        }.resume()
     }
 }
