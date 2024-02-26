@@ -14,7 +14,10 @@ class HomeViewModel: ObservableObject {
     let dogImageService = DogImageService()
     
     init() {
-        self.fetchDogBreedNames()
+        Task {
+            self.fetchDogBreedNames()
+        }
+        
         self.fetchRandomDogImage(count: 50)
     }
     
@@ -28,6 +31,21 @@ class HomeViewModel: ObservableObject {
             case . failure(let error):
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    func fetchDogBreedNames() async {
+        
+        do {
+            let dogBreeds = try await dogImageService.fetchDogBreedNames()
+            
+            if let dogBreeds = dogBreeds {
+                await MainActor.run {
+                    self.dogBreeds = dogBreeds
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
         }
     }
     

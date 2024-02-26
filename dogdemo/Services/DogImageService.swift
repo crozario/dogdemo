@@ -5,9 +5,60 @@
 //  Created by Crossley Rozario on 2/25/24.
 //
 
-import Foundation
+import SwiftUI
 
 class DogImageService {
+    func fetchDogBreedNames(completionHandler: @escaping (Result<[DogBreed], Error>) -> Void) {
+        var dogBreeds = [DogBreed]()
+        
+        guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else {
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(DogBreeds.self, from: data)
+                    
+                    for breed in result.breeds {
+                        dogBreeds.append(DogBreed(breed: breed.key, subBreeds: breed.value))
+                    }
+                    
+                    completionHandler(.success(dogBreeds))
+                    
+                } catch {
+                    completionHandler(.failure(error))
+                }
+            } else if let error = error {
+                completionHandler(.failure(error))
+            }
+            
+        }.resume()
+    }
+    
+    func fetchDogBreedNames() async throws -> [DogBreed]? {
+        var dogBreeds = [DogBreed]()
+        
+        guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else {
+            return nil
+        }
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url, delegate: nil)
+            let decoder = JSONDecoder()
+            let result = try decoder.decode(DogBreeds.self, from: data)
+            
+            for breed in result.breeds {
+                dogBreeds.append(DogBreed(breed: breed.key, subBreeds: breed.value))
+            }
+            
+            return dogBreeds
+        } catch {
+            throw error
+        }
+    }
+    
     func fetchRandomDogImage(count: Int, completionHandler: @escaping (Result<[DogImage], Error>) -> Void) {
         guard let url = URL(string: "https://dog.ceo/api/breeds/image/random/\(count)") else {
             return
@@ -34,35 +85,6 @@ class DogImageService {
             } else if let error = error {
                 completionHandler(.failure(error))
             }
-        }.resume()
-    }
-    
-    func fetchDogBreedNames(completionHandler: @escaping (Result<[DogBreed], Error>) -> Void) {
-        guard let url = URL(string: "https://dog.ceo/api/breeds/list/all") else {
-            return
-        }
-        
-        var dogBreeds = [DogBreed]()
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data {
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(DogBreeds.self, from: data)
-                    
-                    for breed in result.breeds {
-                        dogBreeds.append(DogBreed(breed: breed.key, subBreeds: breed.value))
-                    }
-                    
-                    completionHandler(.success(dogBreeds))
-                    
-                } catch {
-                    completionHandler(.failure(error))
-                }
-            } else if let error = error {
-                completionHandler(.failure(error))
-            }
-            
         }.resume()
     }
     

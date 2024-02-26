@@ -26,14 +26,7 @@ struct DogImageShowcaseView: View {
                                 .clipped()
                                 .cornerRadius(10)
                         case .failure:
-                            ZStack {
-                                Color.gray
-                                Text("Failed To Load")
-                            }
-                            .scaledToFill()
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-                            .clipped()
-                            .cornerRadius(10)
+                            EmptyView()
                         case .empty:
                             ZStack {
                                 ProgressView()
